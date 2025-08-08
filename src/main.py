@@ -1,4 +1,6 @@
 import os, argparse, yaml
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import pandas as pd
 import numpy as np
 from tabulate import tabulate
@@ -9,8 +11,8 @@ from mlflow.tracking import MlflowClient
 
 from src.model import FeatureSpec, GAMTrainer, GAMPyFunc
 from src.eval import evaluate_ranking
-from src.plots import plot_partial_effect
-from src.report import write_markdown
+from src.plots import plot_partial_effect, plot_confusion_matrix, plot_roc_curve, plot_precision_recall_curve
+from src.report import write_markdown, write_html
 
 def autodetect_columns(df: pd.DataFrame, target: str):
     num_cols = [c for c in df.columns if pd.api.types.is_numeric_dtype(df[c]) and c != target]
@@ -21,12 +23,7 @@ def load_config(path: str):
     with open(path) as f:
         return yaml.safe_load(f)
 
-def ensure_dirs():
-    os.makedirs("reports/plots", exist_ok=True)
-    os.makedirs("data", exist_ok=True)
-
 def train_and_log(cfg):
-    ensure_dirs()
     df = pd.read_csv(cfg["data_path"])
     target = cfg["target"]
     # map target to 0/1 if string
@@ -53,10 +50,20 @@ def train_and_log(cfg):
 
     # Plots (limit amount)
     feat_list = (num_cols + cat_cols)[: cfg.get("max_plots", 8)]
-    plot_paths = {}
+    plots = {}
     for feat in feat_list:
         x, y, ci = trainer.partial_effect(feat)
-        plot_paths[feat] = plot_partial_effect("reports/plots", feat, x, y, ci)
+        plots[feat] = plot_partial_effect(feat, x, y, ci)
+
+    # Additional plots
+    y_true = test_df["y"].to_numpy()
+    y_pred = (test_df["p"].to_numpy() > 0.5).astype(int)
+    y_prob = test_df["p"].to_numpy()
+    class_names = ['Good', 'Bad']
+
+    plots["confusion_matrix"] = plot_confusion_matrix(y_true, y_pred, class_names)
+    plots["roc_curve"] = plot_roc_curve(y_true, y_prob)
+    plots["precision_recall_curve"] = plot_precision_recall_curve(y_true, y_prob)
 
     # Top10 table
     top10 = test_df.sort_values("p", ascending=True).head(10).copy()
@@ -69,11 +76,8 @@ def train_and_log(cfg):
         "n_cat": len(cat_cols),
         "metrics": metrics,
     }
-    write_markdown("reports/report.md", meta, plot_paths, top_table_md)
-
-    # Try converting to PDF (pandoc)
-    if os.system("pandoc -v > /dev/null 2>&1") == 0:
-        os.system("pandoc reports/report.md -o reports/report.pdf --pdf-engine=xelatex || pandoc reports/report.md -o reports/report.pdf")
+    write_markdown("reports/report.md", meta, plots)
+    write_html("reports/report.html", meta, plots, top_table_md)
 
     # MLflow logging
     tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "http://localhost:5000")
