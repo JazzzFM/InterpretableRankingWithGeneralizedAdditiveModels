@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from datetime import datetime
 
-from src.report import write_markdown, write_html
+from src.report import write_detailed_reports
 
 def analyze_dataset(data_path):
     """
@@ -113,12 +113,8 @@ def create_report(data_path='data/german_credit.csv'):
 | 2 | 0.2 |"""
 
     report_path_md = 'reports/report.md'
-    write_markdown(report_path_md, meta, plots)
-    print(f"📄 Report generated: {report_path_md}")
-
     report_path_html = 'reports/report.html'
-    write_html(report_path_html, meta, plots, top_md)
-    print(f"🌐 HTML report generated: {report_path_html}")
+    write_detailed_reports(report_path_md, report_path_html, meta, plots, df)
     
     return report_path_md
 
