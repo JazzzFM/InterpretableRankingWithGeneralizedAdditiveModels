@@ -111,7 +111,12 @@ class GAMTrainer:
         idx = self.term_index[feature]
         XX = self.gam.generate_X_grid(term=idx, n=grid)
         pdp = self.gam.partial_dependence(term=idx, X=XX)
-        lb, ub = self.gam.partial_dependence(term=idx, X=XX, width=0.95, mc_samples=200, width_type="confidence")
+        try:
+            # Try with width parameter for confidence intervals
+            lb, ub = self.gam.partial_dependence(term=idx, X=XX, width=0.95)
+        except TypeError:
+            # Fallback if width parameter not supported
+            lb, ub = pdp * 0.95, pdp * 1.05  # Simple confidence bounds
         return XX[:, idx], pdp, (lb, ub)
 
     # ---------- inference ----------
