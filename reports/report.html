@@ -42,11 +42,11 @@
 <p><img alt="Distribución de la Edad" src="plots/age_distribution.png" />
 <em>La distribución de la edad muestra una concentración de solicitantes entre 25 y 40 años.</em></p>
 <h3>Heatmap de Correlación de Variables Numéricas</h3>
-<p><img alt="Heatmap de Correlación" src="plots/correlation_heatmap.png" /></p>
-<p><em>El mapa de calor muestra una correlación positiva moderada entre el monto (<code>amount</code>) y la duración (<code>duration</code>) del crédito, lo cual es lógicamente esperado: créditos más grandes suelen requerir plazos más largos. Es importante destacar la ausencia de correlaciones extremadamente altas (superiores a 0.8), lo que sugiere que la multicolinealidad no es un problema crítico para el modelo.</em></p>
+<p><img alt="Heatmap de Correlación" src="plots/correlation_heatmap.png" />
+<em>El mapa de calor muestra una correlación positiva moderada entre el monto (<code>amount</code>) y la duración (<code>duration</code>) del crédito, lo cual es lógicamente esperado: créditos más grandes suelen requerir plazos más largos. Es importante destacar la ausencia de correlaciones extremadamente altas (superiores a 0.8), lo que sugiere que la multicolinealidad no es un problema crítico para el modelo.</em></p>
 <h3>Distribución del Riesgo por Propósito del Crédito</h3>
-<p><img alt="Distribución del Riesgo por Propósito" src="plots/risk_by_purpose.png" /></p>
-<p><em>Este gráfico revela insights de negocio cruciales. Se observa que los créditos para 'reparaciones' y 'educación' presentan una proporción de riesgo más elevada en comparación con los de 'coche nuevo'. Esta información puede ser utilizada para ajustar las políticas de riesgo o para campañas de marketing dirigidas a segmentos de menor riesgo.</em></p>
+<p><img alt="Distribución del Riesgo por Propósito" src="plots/risk_by_purpose.png" />
+<em>Este gráfico revela insights de negocio cruciales. Se observa que los créditos para 'reparaciones' y 'educación' presentan una proporción de riesgo más elevada en comparación con los de 'coche nuevo'. Esta información puede ser utilizada para ajustar las políticas de riesgo o para campañas de marketing dirigidas a segmentos de menor riesgo.</em></p>
 <h2>3. Rendimiento del Modelo</h2>
 <h3>Métricas de Clasificación</h3>
 <p>| Métrica       | Valor (Prueba) |
@@ -63,11 +63,10 @@
 <img alt="Curva Precisión-Recall" src="plots/precision_recall_curve.png" />
 <em>La curva ROC (izquierda) y la curva Precisión-Recall (derecha) confirman la robusta capacidad predictiva del modelo.</em></p>
 <h3>Distribución de Scores por Clase</h3>
-<p><img alt="Distribución de Scores" src="plots/score_distribution.png" /></p>
-<p><em>Este gráfico es una de las visualizaciones más importantes para evaluar el poder de separación del modelo. La distribución azul representa los clientes de bajo riesgo (Good) y la naranja los de alto riesgo (Bad). Idealmente, estas dos distribuciones deberían estar lo más separadas posible. En nuestro caso, se observa una clara separación: el modelo asigna scores de riesgo más bajos a la mayoría de los clientes buenos y scores más altos a los malos. La zona de superposición representa el área de mayor incertidumbre, donde el modelo tiene más dificultades para discriminar.</em></p>
+<p><img alt="Distribución de Scores" src="plots/score_distribution.png" />
+<em>Este gráfico es una de las visualizaciones más importantes para evaluar el poder de separación del modelo. La distribución azul representa los clientes de bajo riesgo (Good) y la naranja los de alto riesgo (Bad). Idealmente, estas dos distribuciones deberían estar lo más separadas posible. En nuestro caso, se observa una clara separación: el modelo asigna scores de riesgo más bajos a la mayoría de los clientes buenos y scores más altos a los malos. La zona de superposición representa el área de mayor incertidumbre, donde el modelo tiene más dificultades para discriminar.</em></p>
 <h2>4. Interpretabilidad del Modelo: Análisis de Sensibilidad y Efectos Parciales</h2>
 <p>La interpretabilidad es un pilar fundamental en los modelos de riesgo crediticio, permitiendo a los analistas y reguladores entender <em>por qué</em> el modelo toma una decisión. Los Modelos Aditivos Generalizados (GAMs) destacan en esta área al modelar la relación entre cada variable y el resultado de forma aislada.</p>
-
 <h3>4.1. Análisis de Sensibilidad Automatizado</h3>
 <p>El análisis de sensibilidad mide cómo cambia la probabilidad de riesgo predicha ante variaciones en las variables de entrada más importantes. Este análisis es crucial para entender la robustez y la respuesta del modelo ante diferentes escenarios.</p>
 <p><img alt="Análisis de Sensibilidad" src="interpretability/sensitivity_analysis.png" /></p>
@@ -76,9 +75,8 @@
 <ul>
 <li><strong>Edad (<code>age</code>):</strong> Es la variable más influyente. Un <strong>aumento del 50% en la edad</strong> de un solicitante (por ejemplo, de 30 a 45 años) se asocia con una <strong>disminución del 58.3% en su probabilidad de riesgo</strong>. Esto indica que, para el modelo, la madurez es un fuerte indicador de menor riesgo.</li>
 <li><strong>Duración del Crédito (<code>duration</code>):</strong> Tiene un impacto significativo y positivo en el riesgo. Un <strong>aumento del 25% en la duración</strong> del préstamo se traduce en un <strong>incremento del 5.5% en la probabilidad de riesgo</strong>. Préstamos más largos son inherentemente más riesgosos.</li>
-<li><strong>Monto del Crédito (<code>amount</code>):</strong> Muestra una sensibilidad moderada y controlada, con variaciones que no superan el &plusmn;4%. El modelo no penaliza excesivamente los montos altos, manteniendo una respuesta estable.</li>
+<li><strong>Monto del Crédito (<code>amount</code>):</strong> Muestra una sensibilidad moderada y controlada, con variaciones que no superan el ±4%. El modelo no penaliza excesivamente los montos altos, manteniendo una respuesta estable.</li>
 </ul>
-
 <h3>4.2. Efectos Parciales de las Variables Clave</h3>
 <p>Los efectos parciales describen la contribución individual de cada variable al logit de la probabilidad de riesgo.</p>
 <ul>

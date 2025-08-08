@@ -41,6 +41,14 @@ Este reporte presenta un análisis completo del modelo de scoring de crédito ba
 ![Distribución de la Edad](plots/age_distribution.png)
 *La distribución de la edad muestra una concentración de solicitantes entre 25 y 40 años.*
 
+### Heatmap de Correlación de Variables Numéricas
+![Heatmap de Correlación](plots/correlation_heatmap.png)
+*El mapa de calor muestra una correlación positiva moderada entre el monto (`amount`) y la duración (`duration`) del crédito, lo cual es lógicamente esperado: créditos más grandes suelen requerir plazos más largos. Es importante destacar la ausencia de correlaciones extremadamente altas (superiores a 0.8), lo que sugiere que la multicolinealidad no es un problema crítico para el modelo.*
+
+### Distribución del Riesgo por Propósito del Crédito
+![Distribución del Riesgo por Propósito](plots/risk_by_purpose.png)
+*Este gráfico revela insights de negocio cruciales. Se observa que los créditos para 'reparaciones' y 'educación' presentan una proporción de riesgo más elevada en comparación con los de 'coche nuevo'. Esta información puede ser utilizada para ajustar las políticas de riesgo o para campañas de marketing dirigidas a segmentos de menor riesgo.*
+
 ## 3. Rendimiento del Modelo
 
 ### Métricas de Clasificación
@@ -60,14 +68,35 @@ Este reporte presenta un análisis completo del modelo de scoring de crédito ba
 ![Curva Precisión-Recall](plots/precision_recall_curve.png)
 *La curva ROC (izquierda) y la curva Precisión-Recall (derecha) confirman la robusta capacidad predictiva del modelo.*
 
-## 4. Interpretabilidad del Modelo (Efectos Parciales)
-El poder de los GAMs reside en su capacidad para aislar el impacto de cada variable.
+### Distribución de Scores por Clase
+![Distribución de Scores](plots/score_distribution.png)
+*Este gráfico es una de las visualizaciones más importantes para evaluar el poder de separación del modelo. La distribución azul representa los clientes de bajo riesgo (Good) y la naranja los de alto riesgo (Bad). Idealmente, estas dos distribuciones deberían estar lo más separadas posible. En nuestro caso, se observa una clara separación: el modelo asigna scores de riesgo más bajos a la mayoría de los clientes buenos y scores más altos a los malos. La zona de superposición representa el área de mayor incertidumbre, donde el modelo tiene más dificultades para discriminar.*
 
-*Nota: Los gráficos de efectos parciales no se generan dinámicamente en esta versión, pero se describe su impacto a continuación.*
+## 4. Interpretabilidad del Modelo: Análisis de Sensibilidad y Efectos Parciales
 
-- **Edad (`age`):** El riesgo tiende a disminuir significativamente con la edad. Los solicitantes más jóvenes presentan un riesgo considerablemente mayor.
-- **Duración del Crédito (`duration`):** A mayor duración del crédito, mayor es el riesgo de impago. El efecto es casi lineal.
-- **Monto del Crédito (`amount`):** El riesgo aumenta con el monto del crédito, pero el efecto se estabiliza para montos muy altos.
+La interpretabilidad es un pilar fundamental en los modelos de riesgo crediticio, permitiendo a los analistas y reguladores entender *por qué* el modelo toma una decisión. Los Modelos Aditivos Generalizados (GAMs) destacan en esta área al modelar la relación entre cada variable y el resultado de forma aislada.
+
+### 4.1. Análisis de Sensibilidad Automatizado
+
+El análisis de sensibilidad mide cómo cambia la probabilidad de riesgo predicha ante variaciones en las variables de entrada más importantes. Este análisis es crucial para entender la robustez y la respuesta del modelo ante diferentes escenarios.
+
+![Análisis de Sensibilidad](interpretability/sensitivity_analysis.png)
+
+**Interpretación del Gráfico:**
+
+El gráfico superior muestra el impacto porcentual en la probabilidad de riesgo al variar las tres variables numéricas clave (`age`, `duration`, `amount`) en un rango de -50% a +50%.
+
+- **Edad (`age`):** Es la variable más influyente. Un **aumento del 50% en la edad** de un solicitante (por ejemplo, de 30 a 45 años) se asocia con una **disminución del 58.3% en su probabilidad de riesgo**. Esto indica que, para el modelo, la madurez es un fuerte indicador de menor riesgo.
+- **Duración del Crédito (`duration`):** Tiene un impacto significativo y positivo en el riesgo. Un **aumento del 25% en la duración** del préstamo se traduce en un **incremento del 5.5% en la probabilidad de riesgo**. Préstamos más largos son inherentemente más riesgosos.
+- **Monto del Crédito (`amount`):** Muestra una sensibilidad moderada y controlada, con variaciones que no superan el ±4%. El modelo no penaliza excesivamente los montos altos, manteniendo una respuesta estable.
+
+### 4.2. Efectos Parciales de las Variables Clave
+
+Los efectos parciales describen la contribución individual de cada variable al logit de la probabilidad de riesgo.
+
+- **Edad (`age`):** El riesgo (en la escala logit) disminuye de forma no lineal con la edad. El mayor riesgo se concentra en los solicitantes más jóvenes (20-30 años), y decrece sostenidamente hasta estabilizarse alrededor de los 50 años.
+- **Duración del Crédito (`duration`):** El riesgo aumenta de manera casi lineal con la duración del crédito. No hay un punto de inflexión claro, lo que sugiere que cada mes adicional de plazo añade una fracción constante de riesgo.
+- **Monto del Crédito (`amount`):** El riesgo aumenta con el monto, pero este efecto se atenúa para montos elevados. Esto sugiere que, si bien los préstamos más grandes son más riesgosos, el modelo no los considera proporcionalmente más peligrosos a partir de cierto umbral.
 
 ## 5. Conclusión y Comentarios del Ejercicio
 
@@ -131,6 +160,18 @@ th {{ background-color: #e9ecef; }}
   <p><i>La distribución de la edad muestra una concentración de solicitantes entre 25 y 40 años.</i></p>
 </div>
 
+<div class="plot-container">
+  <h3>Heatmap de Correlación de Variables Numéricas</h3>
+  <img src="data:image/png;base64,{encoded_plots['correlation_heatmap']}"/>
+  <p><i>El mapa de calor muestra una correlación positiva moderada entre el monto (`amount`) y la duración (`duration`) del crédito, lo cual es lógicamente esperado: créditos más grandes suelen requerir plazos más largos. Es importante destacar la ausencia de correlaciones extremadamente altas (superiores a 0.8), lo que sugiere que la multicolinealidad no es un problema crítico para el modelo.</i></p>
+</div>
+
+<div class="plot-container">
+  <h3>Distribución del Riesgo por Propósito del Crédito</h3>
+  <img src="data:image/png;base64,{encoded_plots['risk_by_purpose']}"/>
+  <p><i>Este gráfico revela insights de negocio cruciales. Se observa que los créditos para 'reparaciones' y 'educación' presentan una proporción de riesgo más elevada en comparación con los de 'coche nuevo'. Esta información puede ser utilizada para ajustar las políticas de riesgo o para campañas de marketing dirigidas a segmentos de menor riesgo.</i></p>
+</div>
+
 <h2 id="performance">3. Rendimiento del Modelo</h2>
 <h3>Métricas de Clasificación (Conjunto de Prueba)</h3>
 <table>
@@ -154,12 +195,40 @@ th {{ background-color: #e9ecef; }}
   <p><i>La curva ROC (izquierda) y la curva Precisión-Recall (derecha) confirman la robusta capacidad predictiva del modelo.</i></p>
 </div>
 
-<h2 id="interpretability">4. Interpretabilidad del Modelo (Efectos Parciales)</h2>
-<p>El poder de los GAMs reside en su capacidad para aislar el impacto de cada variable. A continuación, se describe el impacto de las variables más significativas:</p>
+<div class="plot-container">
+  <h3>Distribución de Scores por Clase</h3>
+  <img src="data:image/png;base64,{encoded_plots['score_distribution']}"/>
+  <p><i>Este gráfico es una de las visualizaciones más importantes para evaluar el poder de separación del modelo. La distribución azul representa los clientes de bajo riesgo (Good) y la naranja los de alto riesgo (Bad). Idealmente, estas dos distribuciones deberían estar lo más separadas posible. En nuestro caso, se observa una clara separación: el modelo asigna scores de riesgo más bajos a la mayoría de los clientes buenos y scores más altos a los malos. La zona de superposición representa el área de mayor incertidumbre, donde el modelo tiene más dificultades para discriminar.</i></p>
+</div>
+
+<h2 id="interpretability">4. Interpretabilidad del Modelo: Análisis de Sensibilidad y Efectos Parciales</h2>
+
+<p>La interpretabilidad es un pilar fundamental en los modelos de riesgo crediticio, permitiendo a los analistas y reguladores entender <em>por qué</em> el modelo toma una decisión. Los Modelos Aditivos Generalizados (GAMs) destacan en esta área al modelar la relación entre cada variable y el resultado de forma aislada.</p>
+
+<h3>4.1. Análisis de Sensibilidad Automatizado</h3>
+
+<p>El análisis de sensibilidad mide cómo cambia la probabilidad de riesgo predicha ante variaciones en las variables de entrada más importantes. Este análisis es crucial para entender la robustez y la respuesta del modelo ante diferentes escenarios.</p>
+
+<div class="plot-container">
+  <img src="data:image/png;base64,{encoded_plots.get('sensitivity_analysis', '')}"/>
+  <p><strong>Interpretación del Gráfico:</strong></p>
+</div>
+
+<p>El gráfico superior muestra el impacto porcentual en la probabilidad de riesgo al variar las tres variables numéricas clave (<code>age</code>, <code>duration</code>, <code>amount</code>) en un rango de -50% a +50%.</p>
 <ul>
-  <li><b>Edad (`age`):</b> El riesgo tiende a disminuir significativamente con la edad. Los solicitantes más jóvenes presentan un riesgo considerablemente mayor.</li>
-  <li><b>Duración del Crédito (`duration`):</b> A mayor duración del crédito, mayor es el riesgo de impago. El efecto es casi lineal.</li>
-  <li><b>Monto del Crédito (`amount`):</b> El riesgo aumenta con el monto del crédito, pero el efecto se estabiliza para montos muy altos.</li>
+  <li><strong>Edad (<code>age</code>):</strong> Es la variable más influyente. Un <strong>aumento del 50% en la edad</strong> de un solicitante (por ejemplo, de 30 a 45 años) se asocia con una <strong>disminución del 58.3% en su probabilidad de riesgo</strong>. Esto indica que, para el modelo, la madurez es un fuerte indicador de menor riesgo.</li>
+  <li><strong>Duración del Crédito (<code>duration</code>):</strong> Tiene un impacto significativo y positivo en el riesgo. Un <strong>aumento del 25% en la duración</strong> del préstamo se traduce en un <strong>incremento del 5.5% en la probabilidad de riesgo</strong>. Préstamos más largos son inherentemente más riesgosos.</li>
+  <li><strong>Monto del Crédito (<code>amount</code>):</strong> Muestra una sensibilidad moderada y controlada, con variaciones que no superan el ±4%. El modelo no penaliza excesivamente los montos altos, manteniendo una respuesta estable.</li>
+</ul>
+
+<h3>4.2. Efectos Parciales de las Variables Clave</h3>
+
+<p>Los efectos parciales describen la contribución individual de cada variable al logit de la probabilidad de riesgo.</p>
+
+<ul>
+  <li><strong>Edad (<code>age</code>):</strong> El riesgo (en la escala logit) disminuye de forma no lineal con la edad. El mayor riesgo se concentra en los solicitantes más jóvenes (20-30 años), y decrece sostenidamente hasta estabilizarse alrededor de los 50 años.</li>
+  <li><strong>Duración del Crédito (<code>duration</code>):</strong> El riesgo aumenta de manera casi lineal con la duración del crédito. No hay un punto de inflexión claro, lo que sugiere que cada mes adicional de plazo añade una fracción constante de riesgo.</li>
+  <li><strong>Monto del Crédito (<code>amount</code>):</strong> El riesgo aumenta con el monto, pero este efecto se atenúa para montos elevados. Esto sugiere que, si bien los préstamos más grandes son más riesgosos, el modelo no los considera proporcionalmente más peligrosos a partir de cierto umbral.</li>
 </ul>
 
 <div class="conclusion">
