@@ -1,0 +1,11 @@
+data_path: data/german_credit.csv
+target: credit_risk
+test_size: 0.2
+seed: 42
+calibrate: true
+max_plots: 8
+numeric: [duration, amount, age]
+categorical: [status, credit_history, purpose, savings, employment_duration, personal_status_sex, other_debtors, property, other_installment_plans, housing, job, telephone, foreign_worker]
+promote_thresholds:
+  ndcg_at_100: 0.85
+  brier: 0.18

@@ -1,0 +1,56 @@
+environment: development
+
+# Data configuration
+data_path: data/german_credit.csv
+target: Class
+test_size: 0.2
+seed: 42
+
+# Model configuration
+calibrate: true
+max_plots: 12  # More plots for development
+numeric: []
+categorical: []
+
+# Validation thresholds (more lenient for development)
+promote_thresholds:
+  ndcg_at_100: 0.80
+  brier: 0.20
+
+# MLflow configuration
+mlflow:
+  tracking_uri: http://localhost:5000
+  experiment_name: credit-gam-dev
+  model_name: credit_gam_dev
+
+# API configuration  
+api:
+  host: 0.0.0.0
+  port: 8080
+  debug: true
+  reload: true
+  cors_origins: "http://localhost:3000,http://localhost:8050,http://localhost:3001"
+  trusted_hosts: "localhost,127.0.0.1"
+
+# Security configuration
+security:
+  jwt_secret_key: "dev-secret-key-change-me"
+  access_token_expire_minutes: 60
+  secrets_manager: "environment"
+
+# Monitoring configuration
+monitoring:
+  log_level: DEBUG
+  metrics_retention_hours: 24
+  enable_detailed_logging: true
+
+# Database configuration
+database:
+  url: "sqlite:///./credit_gam_dev.db"
+
+# Feature flags
+features:
+  enable_fairness_evaluation: true
+  enable_drift_detection: true
+  enable_batch_processing: true
+  enable_model_explanation: true

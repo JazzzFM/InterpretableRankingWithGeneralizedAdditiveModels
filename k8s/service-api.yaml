@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: credit-gam-api
+spec:
+  selector:
+    app: credit-gam-api
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080

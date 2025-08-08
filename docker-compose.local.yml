@@ -1,0 +1,67 @@
+version: "3.9"
+services:
+  mlflow:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.mlflow
+    container_name: mlflow
+    ports:
+      - "5000:5000"
+    environment:
+      - MLFLOW_BACKEND=sqlite:////mlflow/mlflow.db
+      - MLFLOW_ARTIFACT_ROOT=/mlflow/artifacts
+    volumes:
+      - ./mlflow:/mlflow
+
+  airflow:
+    image: apache/airflow:2.9.2
+    container_name: airflow
+    restart: unless-stopped
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/airflow.db
+      - _PIP_ADDITIONAL_REQUIREMENTS=mlflow pandas scikit-learn pygam matplotlib pyyaml tabulate scipy
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - MLFLOW_EXPERIMENT_NAME=credit-gam-ranking
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./reports:/opt/airflow/reports
+      - ./configs:/opt/airflow/configs
+      - ./src:/opt/airflow/src
+      - ./data:/opt/airflow/data
+    ports:
+      - "8081:8080"
+    command: >
+      bash -lc "
+      airflow db upgrade &&
+      airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.com || true &&
+      airflow webserver -p 8080 &
+      airflow scheduler
+      "
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api
+    container_name: credit-gam-api
+    environment:
+      - MODEL_URI=models:/credit_gam/Production
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mlflow
+
+  dash:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dash
+    container_name: credit-gam-dash
+    environment:
+      - MODEL_URI=models:/credit_gam/Production
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    ports:
+      - "8050:8050"
+    depends_on:
+      - mlflow

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: credit-gam-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: credit-gam-api
+  template:
+    metadata:
+      labels:
+        app: credit-gam-api
+    spec:
+      containers:
+      - name: api
+        image: <ACR_LOGIN_SERVER>/credit-gam-api:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: MODEL_URI
+          value: "models:/credit_gam/Production"
+        - name: MLFLOW_TRACKING_URI
+          value: "http://mlflow.default.svc.cluster.local:5000"
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: credit-gam-api
+spec:
+  type: LoadBalancer
+  selector:
+    app: credit-gam-api
+  ports:
+  - port: 80
+    targetPort: 8080

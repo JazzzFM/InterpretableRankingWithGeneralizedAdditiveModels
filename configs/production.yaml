@@ -1,0 +1,73 @@
+environment: production
+
+# Data configuration
+data_path: /data/german_credit.csv
+target: Class
+test_size: 0.2
+seed: 42
+
+# Model configuration  
+calibrate: true
+max_plots: 6  # Fewer plots for production
+numeric: []
+categorical: []
+
+# Validation thresholds (strict for production)
+promote_thresholds:
+  ndcg_at_100: 0.87
+  brier: 0.16
+
+# MLflow configuration
+mlflow:
+  tracking_uri: ${MLFLOW_TRACKING_URI}
+  experiment_name: credit-gam-prod
+  model_name: credit_gam
+
+# API configuration
+api:
+  host: 0.0.0.0
+  port: 8080
+  debug: false
+  reload: false
+  workers: 4
+  cors_origins: ${CORS_ORIGINS}
+  trusted_hosts: ${TRUSTED_HOSTS}
+
+# Security configuration
+security:
+  jwt_secret_key: ${JWT_SECRET_KEY}
+  access_token_expire_minutes: 15
+  secrets_manager: "azure"  # Use Azure Key Vault in production
+
+# Monitoring configuration
+monitoring:
+  log_level: INFO
+  metrics_retention_hours: 168  # 1 week
+  enable_detailed_logging: false
+  enable_metrics_export: true
+
+# Database configuration
+database:
+  url: ${DATABASE_URL}
+
+# Performance configuration
+performance:
+  model_cache_size: 10
+  prediction_timeout_seconds: 5
+  max_batch_size: 100
+
+# Feature flags
+features:
+  enable_fairness_evaluation: true
+  enable_drift_detection: true
+  enable_batch_processing: true
+  enable_model_explanation: false  # Disabled for performance
+
+# Alerting configuration
+alerting:
+  slack_webhook: ${SLACK_WEBHOOK_URL}
+  email_alerts: ${ALERT_EMAIL_LIST}
+  alert_thresholds:
+    error_rate: 0.05
+    response_time_p95: 1000  # milliseconds
+    fairness_score: 80
