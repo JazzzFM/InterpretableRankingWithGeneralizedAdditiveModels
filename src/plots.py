@@ -14,7 +14,7 @@ def plot_to_base64():
 
 def plot_partial_effect(feature, x, y, ci):
     plt.figure()
-    plt.plot(x, y, label="Efecto parcial")
+    plt.plot(x, y, label="Efecto Parcial")
     if ci is not None and len(ci) == 2:
         # Ensure ci is a numpy array of the correct shape
         lower_ci = np.array(ci[0])
@@ -31,28 +31,28 @@ def plot_confusion_matrix(y_true, y_pred, class_names):
     cm = confusion_matrix(y_true, y_pred)
     plt.figure(figsize=(8, 6))
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=class_names, yticklabels=class_names)
-    plt.title('Confusion Matrix')
-    plt.xlabel('Predicted')
-    plt.ylabel('Actual')
+    plt.title('Matriz de Confusión')
+    plt.xlabel('Predicho')
+    plt.ylabel('Real')
     return plot_to_base64()
 
 def plot_roc_curve(y_true, y_prob):
     fpr, tpr, _ = roc_curve(y_true, y_prob)
     plt.figure()
-    plt.plot(fpr, tpr, label='ROC Curve')
+    plt.plot(fpr, tpr, label='Curva ROC')
     plt.plot([0, 1], [0, 1], 'k--')
-    plt.title('ROC Curve')
-    plt.xlabel('False Positive Rate')
-    plt.ylabel('True Positive Rate')
+    plt.title('Curva ROC')
+    plt.xlabel('Tasa de Falsos Positivos')
+    plt.ylabel('Tasa de Verdaderos Positivos')
     plt.legend()
     return plot_to_base64()
 
 def plot_precision_recall_curve(y_true, y_prob):
     precision, recall, _ = precision_recall_curve(y_true, y_prob)
     plt.figure()
-    plt.plot(recall, precision, label='Precision-Recall Curve')
-    plt.title('Precision-Recall Curve')
+    plt.plot(recall, precision, label='Curva Precisión-Recall')
+    plt.title('Curva Precisión-Recall')
     plt.xlabel('Recall')
-    plt.ylabel('Precision')
+    plt.ylabel('Precisión')
     plt.legend()
     return plot_to_base64()

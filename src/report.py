@@ -3,22 +3,22 @@ from textwrap import dedent
 
 def write_markdown(path, meta: dict, plots: dict):
     os.makedirs(os.path.dirname(path), exist_ok=True)
-    md = f"""# Credit Risk Ranking Report
+    md = f"""# Reporte de Ranking de Riesgo Crediticio
 
-## 1. Executive Summary
-- Observations: {meta['n_obs']}
-- Numeric Variables: {meta['n_num']}
-- Categorical Variables: {meta['n_cat']}
-- Test Metrics:
+## 1. Resumen Ejecutivo
+- Observaciones: {meta['n_obs']}
+- Variables Numéricas: {meta['n_num']}
+- Variables Categóricas: {meta['n_cat']}
+- Métricas de Prueba:
   - ROC-AUC: {meta['metrics']['roc_auc']:.3f}
   - PR-AUC: {meta.get('pr_auc', 'N/A')}
   - Brier: {meta['metrics']['brier']:.3f}
   - nDCG@100: {meta['metrics']['ndcg@100']:.3f}
   - Kendall τ: {meta['metrics']['kendall_tau']:.3f}
 
-## 2. Report Details
+## 2. Detalles del Reporte
 
-A detailed HTML report with interactive plots and in-depth analysis is available at [reports/report.html](reports/report.html).
+Un reporte HTML detallado con gráficos interactivos y análisis en profundidad está disponible en [reports/report.html](reports/report.html).
 """
     with open(path, "w") as f:
         f.write(md)
@@ -29,7 +29,7 @@ def write_html(path, meta: dict, plots: dict, top_md: str):
     html = f"""<!DOCTYPE html>
 <html>
 <head>
-<title>Credit Risk Ranking Report</title>
+<title>Reporte de Ranking de Riesgo Crediticio</title>
 <meta charset="UTF-8">
 <style>
 body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; }}
@@ -47,19 +47,19 @@ th {{ background-color: #f2f2f2; }}
 </head>
 <body>
 <nav>
-<a href="#summary">Summary</a>
-<a href="#performance">Performance</a>
-<a href="#effects">Partial Effects</a>
+<a href="#resumen">Resumen</a>
+<a href="#rendimiento">Rendimiento</a>
+<a href="#efectos">Efectos Parciales</a>
 </nav>
 <div class="container">
-<h1 id="summary">Credit Risk Ranking Report</h1>
+<h1 id="resumen">Reporte de Ranking de Riesgo Crediticio</h1>
 
-<h2>1. Executive Summary</h2>
+<h2>1. Resumen Ejecutivo</h2>
 <ul>
-<li>Observations: {meta['n_obs']}</li>
-<li>Numeric Variables: {meta['n_num']}</li>
-<li>Categorical Variables: {meta['n_cat']}</li>
-<li>Test Metrics:
+<li>Observaciones: {meta['n_obs']}</li>
+<li>Variables Numéricas: {meta['n_num']}</li>
+<li>Variables Categóricas: {meta['n_cat']}</li>
+<li>Métricas de Prueba:
   <ul>
   <li>ROC-AUC: {meta['metrics']['roc_auc']:.3f}</li>
   <li>PR-AUC: {meta.get('pr_auc', 'N/A')}</li>
@@ -70,31 +70,31 @@ th {{ background-color: #f2f2f2; }}
 </li>
 </ul>
 
-<h2 id="performance">2. Model Performance</h2>
+<h2 id="rendimiento">2. Rendimiento del Modelo</h2>
 <div class="plot">
-<h3>Confusion Matrix</h3>
+<h3>Matriz de Confusión</h3>
 <img src="data:image/png;base64,{plots['confusion_matrix']}"/>
-<p>The confusion matrix shows the model's performance in classifying credit risk. The diagonal elements represent the number of points for which the predicted label is equal to the true label, while off-diagonal elements are those that are mislabeled by the classifier.</p>
+<p>La matriz de confusión muestra el rendimiento del modelo en la clasificación del riesgo crediticio. Los elementos diagonales representan el número de puntos para los cuales la etiqueta predicha es igual a la etiqueta real, mientras que los elementos fuera de la diagonal son aquellos que el clasificador etiqueta incorrectamente.</p>
 </div>
 <div class="plot">
-<h3>ROC Curve</h3>
+<h3>Curva ROC</h3>
 <img src="data:image/png;base64,{plots['roc_curve']}"/>
-<p>The ROC curve is a graphical plot that illustrates the diagnostic ability of a binary classifier system as its discrimination threshold is varied. The curve is created by plotting the true positive rate (TPR) against the false positive rate (FPR) at various threshold settings.</p>
+<p>La curva ROC es un gráfico que ilustra la capacidad de diagnóstico de un sistema clasificador binario a medida que varía su umbral de discriminación. La curva se crea trazando la tasa de verdaderos positivos (TPR) frente a la tasa de falsos positivos (FPR) en varios ajustes de umbral.</p>
 </div>
 <div class="plot">
-<h3>Precision-Recall Curve</h3>
+<h3>Curva Precisión-Recall</h3>
 <img src="data:image/png;base64,{plots['precision_recall_curve']}"/>
-<p>The precision-recall curve shows the tradeoff between precision and recall for different threshold. A high area under the curve represents both high recall and high precision, where high precision relates to a low false positive rate, and high recall relates to a low false negative rate.</p>
+<p>La curva de precisión-recall muestra el equilibrio entre la precisión y el recall para diferentes umbrales. Un área alta bajo la curva representa tanto un alto recall como una alta precisión, donde una alta precisión se relaciona con una baja tasa de falsos positivos y un alto recall se relaciona con una baja tasa de falsos negativos.</p>
 </div>
 
-<h2 id="effects">3. Partial Effects by Variable</h2>
+<h2 id="efectos">3. Efectos Parciales por Variable</h2>
 """
     for feat, img in plots.items():
         if feat not in ["confusion_matrix", "roc_curve", "precision_recall_curve"]:
             html += f"""<div class="plot">
 <h3>{feat}</h3>
 <img src="data:image/png;base64,{img}"/>
-<p>This plot shows the partial effect of the feature on the credit risk prediction. It illustrates how the prediction changes as the feature value changes, holding all other features constant.</p>
+<p>Este gráfico muestra el efecto parcial de la característica en la predicción del riesgo crediticio. Ilustra cómo cambia la predicción a medida que cambia el valor de la característica, manteniendo constantes todas las demás características.</p>
 </div>"""
 
     html += """</div>

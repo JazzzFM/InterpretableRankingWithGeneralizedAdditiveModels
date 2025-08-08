@@ -5,9 +5,7 @@ import pandas as pd
 import numpy as np
 from tabulate import tabulate
 from sklearn.isotonic import IsotonicRegression
-import mlflow
-from mlflow.models.signature import infer_signature
-from mlflow.tracking import MlflowClient
+
 
 from src.model import FeatureSpec, GAMTrainer, GAMPyFunc
 from src.eval import evaluate_ranking
@@ -79,46 +77,7 @@ def train_and_log(cfg):
     write_markdown("reports/report.md", meta, plots)
     write_html("reports/report.html", meta, plots, top_table_md)
 
-    # MLflow logging
-    tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "http://localhost:5000")
-    mlflow.set_tracking_uri(tracking_uri)
-    exp_name = os.getenv("MLFLOW_EXPERIMENT_NAME", "credit-gam-ranking")
-    mlflow.set_experiment(exp_name)
-
-    with mlflow.start_run() as run:
-        mlflow.log_params({
-            "model":"LogisticGAM",
-            "seed": cfg["seed"],
-            "test_size": cfg["test_size"],
-            "numeric": ",".join(num_cols),
-            "categorical": ",".join(cat_cols),
-        })
-        mlflow.log_metrics(metrics)
-        # artifacts
-        mlflow.log_artifact("reports/report.md")
-        if os.path.exists("reports/report.pdf"):
-            mlflow.log_artifact("reports/report.pdf")
-        for p in plot_paths.values():
-            mlflow.log_artifact(p, artifact_path="plots")
-        # Register model as PyFunc including preprocessing
-        pyfunc = GAMPyFunc(trainer.gam, trainer.spec.numeric, trainer.spec.categorical,
-                           trainer.label_encoders, trainer.numeric_median)
-        # Build an input example (median row)
-        example = pd.DataFrame([{
-            **{c: float(df[c].median()) for c in trainer.spec.numeric},
-            **{c: str(df[c].astype(str).mode(dropna=True).iloc[0] if not df[c].empty else "NA_SENTINEL") for c in trainer.spec.categorical}
-        }])
-        signature = infer_signature(example, pyfunc.predict(None, example))
-        model_info = mlflow.pyfunc.log_model(
-            artifact_path="model",
-            python_model=pyfunc,
-            input_example=example,
-            signature=signature,
-            registered_model_name="credit_gam"
-        )
-        run_id = run.info.run_id
-    # Return identifiers for gating
-    return {"run_id": run_id, "registered_model": "credit_gam"}
+    
 
 def main():
     ap = argparse.ArgumentParser()
