@@ -23,18 +23,22 @@ Este reporte presenta un análisis completo del modelo de scoring de crédito ba
 
 ### Distribución del Riesgo Crediticio
 ![Distribución del Riesgo](plots/credit_risk_distribution.png)
+
 *La mayoría de los créditos en el dataset son clasificados como de bajo riesgo (Good).*
 
 ### Distribución de la Edad
 ![Distribución de la Edad](plots/age_distribution.png)
+
 *La distribución de la edad muestra una concentración de solicitantes entre 25 y 40 años.*
 
 ### Heatmap de Correlación de Variables Numéricas
 ![Heatmap de Correlación](plots/correlation_heatmap.png)
+
 *El mapa de calor muestra una correlación positiva moderada entre el monto (`amount`) y la duración (`duration`) del crédito, lo cual es lógicamente esperado: créditos más grandes suelen requerir plazos más largos. Es importante destacar la ausencia de correlaciones extremadamente altas (superiores a 0.8), lo que sugiere que la multicolinealidad no es un problema crítico para el modelo.*
 
 ### Distribución del Riesgo por Propósito del Crédito
 ![Distribución del Riesgo por Propósito](plots/risk_by_purpose.png)
+
 *Este gráfico revela insights de negocio cruciales. Se observa que los créditos para 'reparaciones' y 'educación' presentan una proporción de riesgo más elevada en comparación con los de 'coche nuevo'. Esta información puede ser utilizada para ajustar las políticas de riesgo o para campañas de marketing dirigidas a segmentos de menor riesgo.*
 
 ## 3. Rendimiento del Modelo
@@ -54,11 +58,13 @@ Este reporte presenta un análisis completo del modelo de scoring de crédito ba
 
 ### Matriz de Confusión
 ![Matriz de Confusión](plots/confusion_matrix.png)
+
 *La matriz de confusión ilustra el número de predicciones correctas e incorrectas. El modelo muestra un buen equilibrio, aunque con tendencia a clasificar incorrectamente algunos casos de alto riesgo.*
 
 ### Curvas de Rendimiento
 ![Curva ROC](plots/roc_curve.png)
 ![Curva Precisión-Recall](plots/precision_recall_curve.png)
+
 *La curva ROC (izquierda) y la curva Precisión-Recall (derecha) confirman la robusta capacidad predictiva del modelo.*
 
 ### Interpretación Detallada de las Métricas
@@ -101,6 +107,7 @@ El modelo está preparado para implementación en producción, con especial fort
 
 ### Distribución de Scores por Clase
 ![Distribución de Scores](plots/score_distribution.png)
+
 *Este gráfico es una de las visualizaciones más importantes para evaluar el poder de separación del modelo. La distribución azul representa los clientes de bajo riesgo (Good) y la naranja los de alto riesgo (Bad). Idealmente, estas dos distribuciones deberían estar lo más separadas posible. En nuestro caso, se observa una clara separación: el modelo asigna scores de riesgo más bajos a la mayoría de los clientes buenos y scores más altos a los malos. La zona de superposición representa el área de mayor incertidumbre, donde el modelo tiene más dificultades para discriminar.*
 
 ## 4. Interpretabilidad del Modelo: Análisis de Sensibilidad y Efectos Parciales
