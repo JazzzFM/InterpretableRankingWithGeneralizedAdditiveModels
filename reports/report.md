@@ -40,12 +40,17 @@ Este reporte presenta un análisis completo del modelo de scoring de crédito ba
 ## 3. Rendimiento del Modelo
 
 ### Métricas de Clasificación
-| Métrica       | Valor (Prueba) |
-|---------------|----------------|
-| ROC-AUC       | 0.850       |
-| Brier Score   | 0.150       |
-| nDCG@100      | 0.900    |
-| Kendall-Tau   | 0.600 |
+| Métrica       | Valor (Prueba) | Interpretación |
+|---------------|----------------|----------------|
+| **Accuracy**      | 0.745       | El modelo clasifica correctamente el 74.5% de los casos en el conjunto de prueba |
+| **Precision**     | 0.799       | Del total de casos predichos como alto riesgo, el 79.9% efectivamente lo son |
+| **Recall**        | 0.850       | El modelo identifica correctamente el 85% de los casos reales de alto riesgo |
+| **F1-Score**      | 0.824       | Excelente medida balanceada entre precisión y recall |
+| **ROC-AUC**       | 0.761       | Buena capacidad discriminativa - distingue correctamente entre riesgo alto y bajo el 76.1% de las veces |
+| **KS Statistic**  | 0.445       | Buena separación entre distribuciones de riesgo alto y bajo (>0.40 es aceptable) |
+| **Brier Score**   | 0.177       | Buena calibración de probabilidades predichas |
+| **nDCG@100**      | 0.714       | Buena calidad del ranking - los casos más riesgosos están bien ordenados |
+| **Kendall-Tau**   | 0.339       | Correlación moderada entre el ranking predicho y el real |
 
 ### Matriz de Confusión
 ![Matriz de Confusión](plots/confusion_matrix.png)
@@ -55,6 +60,44 @@ Este reporte presenta un análisis completo del modelo de scoring de crédito ba
 ![Curva ROC](plots/roc_curve.png)
 ![Curva Precisión-Recall](plots/precision_recall_curve.png)
 *La curva ROC (izquierda) y la curva Precisión-Recall (derecha) confirman la robusta capacidad predictiva del modelo.*
+
+### Interpretación Detallada de las Métricas
+
+#### Métricas de Clasificación Fundamental
+
+**Accuracy (74.5%):** Esta métrica indica que el modelo clasifica correctamente 3 de cada 4 solicitudes de crédito. Si bien no es la métrica más importante en riesgo crediticio (debido al desbalance de clases), proporciona una visión general sólida del rendimiento.
+
+**Precision (79.9%):** De todos los clientes que el modelo predice como de alto riesgo, el 79.9% efectivamente presentan problemas de pago. Esta métrica es crucial para la rentabilidad, ya que rechazar demasiados "falsos positivos" puede significar pérdida de ingresos. El valor obtenido es muy bueno.
+
+**Recall (85.0%):** El modelo identifica correctamente al 85% de los clientes que realmente presentarán problemas de pago. Esta métrica es fundamental para el control de riesgo - un recall alto como este significa que el modelo captura efectivamente a la mayoría de clientes problemáticos.
+
+**F1-Score (82.4%):** Esta métrica balancea precision y recall. Un F1 de 0.824 es excelente, indicando un muy buen compromiso entre identificar correctamente a los clientes riesgosos sin rechazar excesivamente a los buenos clientes.
+
+#### Métricas Específicas de Riesgo Crediticio
+
+**ROC-AUC (76.1%):** Esta es una de las métricas más importantes en scoring crediticio. Un AUC de 0.761 indica una buena capacidad discriminativa. En términos prácticos, si seleccionamos aleatoriamente un cliente bueno y uno malo, el modelo clasificará correctamente al malo como más riesgoso el 76.1% de las veces.
+
+**KS Statistic (44.5%):** La estadística de Kolmogorov-Smirnov mide la máxima separación entre las distribuciones de score de buenos y malos clientes. Un KS de 0.445 es considerado bueno en la industria crediticia (valores >0.40 son aceptables). Esto significa que existe un punto de corte donde la diferencia entre la proporción acumulada de buenos y malos clientes es del 44.5%.
+
+**Brier Score (17.7%):** Evalúa la calibración de las probabilidades predichas. Un Brier Score de 0.177 es razonablemente bajo, indicando que las probabilidades predichas por el modelo tienen una calibración aceptable con la realidad observada.
+
+#### Métricas de Ranking
+
+**nDCG@100 (71.4%):** Esta métrica evalúa qué tan bien está ordenado el ranking de riesgo. Un nDCG de 0.714 indica que el modelo posiciona bien a los clientes más riesgosos en las primeras posiciones del ranking, aunque hay margen de mejora.
+
+**Kendall-Tau (33.9%):** Mide la correlación entre el ranking predicho y el ranking real basado en el comportamiento observado. Un valor de 0.339 indica una correlación moderada entre ambos rankings.
+
+#### Implicaciones para el Negocio
+
+Estas métricas, en conjunto, sugieren un modelo sólido con las siguientes características:
+
+- **Muy buena capacidad de detección** de casos de riesgo (Recall = 85%)
+- **Alta precisión** en las predicciones de riesgo (Precision = 79.9%)
+- **Balance excelente** entre identificar riesgo y no rechazar buenos clientes (F1 = 82.4%)
+- **Capacidad discriminativa buena** (ROC-AUC = 76.1%, KS = 44.5%)
+- **Ranking efectivo** de clientes por riesgo (nDCG = 71.4%)
+
+El modelo está preparado para implementación en producción, con especial fortaleza en la identificación de casos de alto riesgo, aspecto fundamental para la gestión de cartera y prevención de pérdidas.
 
 ### Distribución de Scores por Clase
 ![Distribución de Scores](plots/score_distribution.png)
