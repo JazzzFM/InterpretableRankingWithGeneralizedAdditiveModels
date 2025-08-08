@@ -1,6 +1,6 @@
-# Reporte Detallado de Riesgo Crediticio
+# Reporte de Riesgo Crediticio
 
-## 1. Resumen Ejecutivo
+## 1. Resumen 
 Este reporte presenta un análisis completo del modelo de scoring de crédito basado en un Modelo Aditivo Generalizado (GAM). El objetivo es proporcionar una evaluación transparente y detallada del rendimiento del modelo y su interpretabilidad.
 
 - **Observaciones Totales:** 1000
