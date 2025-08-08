@@ -1,36 +1,33 @@
 # 🏛️ Credit GAM Pipeline - Enterprise MLOps Solution
 
-[![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-[![MLOps](https://img.shields.io/badge/MLOps-Production%20Ready-green.svg)](https://mlops.org/)
-[![Docker](https://img.shields.io/badge/docker-containerized-blue.svg)](https://www.docker.com/)
-[![Tests](https://img.shields.io/badge/tests-22%2F22%20passing-brightgreen.svg)](./tests/)
+[![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/) [![MLOps](https://img.shields.io/badge/MLOps-Production%20Ready-green.svg)](https://mlops.org/) [![Docker](https://img.shields.io/badge/docker-containerized-blue.svg)](https://www.docker.com/) [![Tests](https://img.shields.io/badge/tests-22%2F22%20passing-brightgreen.svg)](./tests/)
 
-## 🚀 Descripción del Proyecto
+## 🚀 Project Description
 
-**Sistema MLOps empresarial completo** para credit scoring usando **Generalized Additive Models (GAM)** con interpretabilidad total y ranking automático. Solución production-ready con arquitectura de microservicios.
+This project is a complete enterprise MLOps system for credit scoring using **Generalized Additive Models (GAM)** with full interpretability and automatic ranking. It's a production-ready solution with a microservices architecture.
 
-### ✨ Características Principales
+### ✨ Key Features
 
-| Componente | Estado | Descripción |
+| Component | Status | Description |
 |------------|--------|-------------|
-| 🧠 **GAM Interpretable** | ✅ | Splines + factores con efectos parciales visualizables |
-| 🎯 **Ranking Automático** | ✅ | Ordenamiento por probabilidad de riesgo crediticio |
-| 🔒 **Seguridad Enterprise** | ✅ | JWT + bcrypt + gestión de secretos multi-backend |
-| 📊 **Monitoreo Real-time** | ✅ | Métricas + logging + health checks automáticos |
-| 🔄 **CI/CD Pipeline** | ✅ | Tests automatizados + despliegue multi-ambiente |
-| 📈 **Interpretabilidad Total** | ✅ | Análisis de sensibilidad + gráficos explicativos |
-| ⚖️ **Evaluación de Fairness** | ✅ | Detección de bias + métricas de equidad |
-| 🐳 **Containerización** | ✅ | Docker + Kubernetes + orquestación completa |
+| 🧠 **Interpretable GAM** | ✅ | Splines + factors with visualizable partial effects |
+| 🎯 **Automatic Ranking** | ✅ | Sorting by credit risk probability |
+| 🔒 **Enterprise Security** | ✅ | JWT + bcrypt + multi-backend secret management |
+| 📊 **Real-time Monitoring** | ✅ | Metrics + logging + automatic health checks |
+| 🔄 **CI/CD Pipeline** | ✅ | Automated tests + multi-environment deployment |
+| 📈 **Full Interpretability** | ✅ | Sensitivity analysis + explanatory graphs |
+| ⚖️ **Fairness Assessment** | ✅ | Bias detection + fairness metrics |
+| 🐳 **Containerization** | ✅ | Docker + Kubernetes + full orchestration |
 
-### 🎯 Casos de Uso
+### 🎯 Use Cases
 
-- **Scoring crediticio** con explicabilidad completa
-- **Ranking de clientes** por riesgo de impago  
-- **Análisis de sensibilidad** de variables de crédito
-- **Monitoreo de drift** en datos de entrada
-- **APIs seguras** para integración enterprise
+- **Credit scoring** with full explainability
+- **Customer ranking** by default risk
+- **Sensitivity analysis** of credit variables
+- **Input data drift monitoring**
+- **Secure APIs** for enterprise integration
 
-## 🏗️ Arquitectura del Sistema MLOps
+## 🏗️ MLOps System Architecture
 
 ```mermaid
 graph TB
@@ -54,52 +51,51 @@ graph TB
     style PA fill:#fff3e0
 ```
 
-## 📁 Estructura del Proyecto
+## 📁 Project Structure
 
 ```
 FinveroPruebaTecnica/
-├── 🔐 src/                           # Código fuente principal
-│   ├── auth.py                      # ✅ Sistema de autenticación JWT
-│   ├── config.py                    # ✅ Gestión de configuración multi-ambiente
-│   ├── eval.py                      # ✅ Métricas comprehensivas (Accuracy, F1, ROC, KS)
-│   ├── fairness.py                  # ✅ Evaluación de bias y fairness
-│   ├── hyperparameter_tuning.py     # ✅ Optimización con Optuna
-│   ├── main.py                      # 🔧 Pipeline principal 
-│   ├── model.py                     # ✅ Modelo GAM con splines + interpretabilidad
-│   ├── monitoring.py                # ✅ Monitoreo en tiempo real
-│   ├── plots.py                     # ✅ Visualizaciones e interpretabilidad
-│   ├── secrets_manager.py           # ✅ Gestión segura de secretos
-│   ├── service_enhanced.py          # ✅ API segura con middleware
-│   └── validation.py                # ✅ Validación Pydantic + drift detection
-├── 🧪 tests/                         # Suite de tests comprehensiva
+├── 🔐 src/                           # Main source code
+│   ├── auth.py                      # ✅ JWT authentication system
+│   ├── config.py                    # ✅ Multi-environment configuration management
+│   ├── eval.py                      # ✅ Comprehensive metrics (Accuracy, F1, ROC, KS)
+│   ├── fairness.py                  # ✅ Bias and fairness assessment
+│   ├── hyperparameter_tuning.py     # ✅ Optimization with Optuna
+│   ├── main.py                      # 🔧 Main pipeline
+│   ├── model.py                     # ✅ GAM model with splines + interpretability
+│   ├── monitoring.py                # ✅ Real-time monitoring
+│   ├── plots.py                     # ✅ Visualizations and interpretability
+│   ├── secrets_manager.py           # ✅ Secure secret management
+│   ├── service_enhanced.py          # ✅ Secure API with middleware
+│   └── validation.py                # ✅ Pydantic validation + drift detection
+├── 🧪 tests/                         # Comprehensive test suite
 │   └── unit/
-│       ├── test_auth.py             # ✅ Tests de autenticación (9/9 ✅)
-│       └── test_validation.py       # ✅ Tests de validación (13/13 ✅)
-├── ⚙️ configs/                       # Configuración por ambiente
-│   ├── base.yaml                    # 🔧 Configuración base
-│   ├── development.yaml             # ✅ Ambiente desarrollo
-│   └── production.yaml              # ✅ Ambiente producción
+│       ├── test_auth.py             # ✅ Authentication tests (9/9 ✅)
+│       └── test_validation.py       # ✅ Validation tests (13/13 ✅)
+├── ⚙️ configs/                       # Configuration by environment
+│   ├── base.yaml                    # 🔧 Base configuration
+│   ├── development.yaml             # ✅ Development environment
+│   └── production.yaml              # ✅ Production environment
 ├── 🔄 .github/workflows/            # CI/CD Pipeline
-│   └── ci.yml                       # ✅ Pipeline completo automatizado
-├── 📊 reports/                      # Reportes y visualizaciones
-│   ├── interpretability/            # ✅ Análisis de interpretabilidad GAM
-│   │   └── sensitivity_analysis.png # Gráfico de sensibilidad
-│   ├── plots/                       # Gráficos generados
-│   │   └── dataset_analysis.png     # Análisis del dataset
-│   ├── report.html                  # ✅ Reporte web interactivo
-│   └── report.md                    # ✅ Reporte markdown
-├── 🛠️ scripts/                       # Scripts utilitarios
-│   ├── fetch_german_credit.py       # Descarga de datos
-│   └── azure_bootstrap.sh           # Script para Azure
-├── generate_report.py               # ✅ Generador de reportes
-├── test_basic_functionality.py     # ✅ Tests de integración
-├── test_gam_interpretability.py    # ✅ Tests de interpretabilidad GAM
-└── requirements-enhanced.txt        # ✅ Dependencias actualizadas
-```
+│   └── ci.yml                       # ✅ Complete automated pipeline
+├── 📊 reports/                      # Reports and visualizations
+│   ├── interpretability/            # ✅ GAM interpretability analysis
+│   │   └── sensitivity_analysis.png # Sensitivity analysis graph
+│   ├── plots/                       # Generated plots
+│   │   └── dataset_analysis.png     # Dataset analysis
+│   ├── report.html                  # ✅ Interactive web report
+│   └── report.md                    # ✅ Markdown report
+├── 🛠️ scripts/                       # Utility scripts
+│   ├── fetch_german_credit.py       # Data download
+│   └── azure_bootstrap.sh           # Script for Azure
+├── generate_report.py               # ✅ Report generator
+├── test_basic_functionality.py     # ✅ Integration tests
+├── test_gam_interpretability.py    # ✅ GAM interpretability tests
+└── requirements-enhanced.txt        # ✅ Updated dependencies
 
-## 🧮 Modelo GAM con Interpretabilidad Total
+## 🧮 Interpretable GAM Model
 
-### 1. 📊 **Implementación GAM Core** (`src/model.py:77-86`)
+### 1. 📊 **Core GAM Implementation** (`src/model.py:77-86`)
 
 ```python
 def build_terms(self):
@@ -107,133 +103,133 @@ def build_terms(self):
     terms = []
     # Splines (smooth terms) for numeric variables
     for col in self.spec.numeric:
-        terms.append(s(self.term_index[col]))  # ✅ Efectos no-lineales suaves
+        terms.append(s(self.term_index[col]))  # ✅ Smooth non-linear effects
     # Factor terms for categorical variables  
     for col in self.spec.categorical:
-        terms.append(f(self.term_index[col]))  # ✅ Efectos categóricos discretos
+        terms.append(f(self.term_index[col]))  # ✅ Discrete categorical effects
     return TermList(*terms)
 ```
 
-### 2. 🎯 **Variables y Efectos Implementados**
+### 2. 🎯 **Implemented Variables and Effects**
 
-| Tipo | Variable | Técnica GAM | Efecto en Ranking |
+| Type | Variable | GAM Technique | Effect on Ranking |
 |------|----------|-------------|-------------------|
-| 📈 **Numérica** | `age` | `s(age)` - Spline | -58.3% (edad +50%) - Menor riesgo |
-| 📈 **Numérica** | `duration` | `s(duration)` - Spline | +5.5% (duración +25%) - Mayor riesgo |
-| 📈 **Numérica** | `amount` | `s(amount)` - Spline | ±4% variación controlada |
-| 🏷️ **Categórica** | `status` | `f(status)` - Factor | Impacto por estado de cuenta |
-| 🏷️ **Categórica** | `purpose` | `f(purpose)` - Factor | Variación por propósito crédito |
+| 📈 **Numeric** | `age` | `s(age)` - Spline | -58.3% (age +50%) - Lower risk |
+| 📈 **Numeric** | `duration` | `s(duration)` - Spline | +5.5% (duration +25%) - Higher risk |
+| 📈 **Numeric** | `amount` | `s(amount)` - Spline | ±4% controlled variation |
+| 🏷️ **Categorical** | `status` | `f(status)` - Factor | Impact by account status |
+| 🏷️ **Categorical** | `purpose` | `f(purpose)` - Factor | Variation by credit purpose |
 
-### 3. 📊 **Ranking Automático** (`src/model.py:104-105`)
+### 3. 📊 **Automatic Ranking** (`src/model.py:104-105`)
 
 ```python
-# Ranking basado en probabilidades GAM
-train_df["rank"] = (-train_df["p"]).rank(method="first")  # Menor prob = mejor rank
-test_df["rank"] = (-test_df["p"]).rank(method="first")    # Ordenamiento descendente
+# Ranking based on GAM probabilities
+train_df["rank"] = (-train_df["p"]).rank(method="first")  # Lower prob = better rank
+test_df["rank"] = (-test_df["p"]).rank(method="first")    # Descending order
 ```
 
-**Métricas de Rendimiento Verificadas:**
-- ✅ **Accuracy Train**: 86.0% - Precisión en entrenamiento
-- ✅ **Accuracy Test**: 77.0% - Generalización en test
-- ✅ **Interpretabilidad**: 100% por efectos parciales
+**Verified Performance Metrics:**
+- ✅ **Train Accuracy**: 86.0% - Accuracy in training
+- ✅ **Test Accuracy**: 77.0% - Generalization in test
+- ✅ **Interpretability**: 100% by partial effects
 
-### 2. 📊 **Interpretabilidad por Característica Individual**
+### 2. 📊 **Interpretability by Individual Feature**
 
-**✅ Cómo cada característica afecta el ranking:**
-- **Efectos parciales** implementados (`partial_effect` method)
-- **Intervalos de confianza** calculados automáticamente
-- **Visualización individual** por cada característica
-- **Contribución específica** cuantificada al modelo final
+**✅ How each feature affects the ranking:**
+- **Partial effects** implemented (`partial_effect` method)
+- **Confidence intervals** automatically calculated
+- **Individual visualization** for each feature
+- **Specific contribution** quantified to the final model
 
-**Ejemplo de interpretación:**
-- **Age**: Muy sensible (-58.3% cambio en probabilidad con +50% edad)
-- **Duration**: Alta sensibilidad (+5.5% cambio con +50% duración)
-- **Amount**: Sensibilidad moderada (cambios menores)
+**Interpretation Example:**
+- **Age**: Very sensitive (-58.3% change in probability with +50% age)
+- **Duration**: High sensitivity (+5.5% change with +50% duration)
+- **Amount**: Moderate sensitivity (minor changes)
 
-### 3. 🔍 **Análisis de Sensibilidad Automatizado**
+### 3. 🔍 **Automated Sensitivity Analysis**
 
-**✅ Sensibilidad a cambios en características clave:**
-- **Variaciones sistemáticas**: -50%, -25%, +25%, +50%
-- **Impacto cuantificado** en probabilidad de riesgo
-- **Gráficos automáticos** de sensibilidad generados
-- **Identificación de features críticas** para decisiones
+**✅ Sensitivity to changes in key features:**
+- **Systematic variations**: -50%, -25%, +25%, +50%
+- **Quantified impact** on risk probability
+- **Automatic sensitivity graphs** generated
+- **Identification of critical features** for decisions
 
-## 🎯 Componentes MLOps Implementados
+## 🎯 Implemented MLOps Components
 
-### 1. 🔐 Sistema de Autenticación y Seguridad Enterprise
-- **JWT Authentication** con bcrypt hashing
+### 1. 🔐 Enterprise Authentication and Security System
+- **JWT Authentication** with bcrypt hashing
 - **Role-based access control** (RBAC)
-- **Secrets management** multi-backend (Environment, File, Azure Key Vault)
-- **Security middleware** con CORS y rate limiting
-- **✅ Tests**: 9/9 pasando
+- **Multi-backend secrets management** (Environment, File, Azure Key Vault)
+- **Security middleware** with CORS and rate limiting
+- **✅ Tests**: 9/9 passing
 
-### 2. 📊 Métricas de Evaluación Comprehensivas
-**Todas las métricas solicitadas implementadas:**
-- **Accuracy**: Exactitud general del modelo
-- **Precision**: Precisión de predicciones positivas
-- **Recall**: Sensibilidad para detectar casos positivos
-- **F1-Score**: Balance entre precisión y recall
-- **ROC-AUC**: Capacidad discriminativa
-- **KS Statistic**: Separación entre distribuciones
-- **Brier Score**: Calidad de probabilidades
-- **NDCG@100**: Métricas de ranking
+### 2. 📊 Comprehensive Evaluation Metrics
+**All requested metrics implemented:**
+- **Accuracy**: Overall model accuracy
+- **Precision**: Precision of positive predictions
+- **Recall**: Sensitivity to detect positive cases
+- **F1-Score**: Balance between precision and recall
+- **ROC-AUC**: Discriminative ability
+- **KS Statistic**: Separation between distributions
+- **Brier Score**: Quality of probabilities
+- **NDCG@100**: Ranking metrics
 
-### 3. 🔍 Validación y Calidad de Datos
-- **Pydantic models** con reglas de negocio
-- **Data drift detection** usando Kolmogorov-Smirnov
-- **Data quality assessment** automático
-- **Schema validation** robusta
-- **✅ Tests**: 13/13 pasando
+### 3. 🔍 Data Validation and Quality
+- **Pydantic models** with business rules
+- **Data drift detection** using Kolmogorov-Smirnov
+- **Automatic data quality assessment**
+- **Robust schema validation**
+- **✅ Tests**: 13/13 passing
 
-### 4. 📈 Monitoreo y Observabilidad
+### 4. 📈 Monitoring and Observability
 - **Real-time metrics** collection
-- **Structured logging** con correlation IDs
-- **Performance tracking** (latencia ~70ms, throughput optimizado)
-- **Health checks** automáticos
+- **Structured logging** with correlation IDs
+- **Performance tracking** (latency ~70ms, optimized throughput)
+- **Automatic health checks**
 
-### 5. ⚖️ Evaluación de Fairness
+### 5. ⚖️ Fairness Assessment
 - **Demographic parity** metrics
 - **Equalized odds** evaluation
 - **Individual fairness** assessment
-- **Bias detection** con recomendaciones automáticas
+- **Bias detection** with automatic recommendations
 
 ## 🚀 Quick Start
 
-### 📋 Prerrequisitos
-- **Python 3.11+** con pip actualizado
-- **Docker & Docker Compose** para containerización
-- **Git** para clonación del repositorio
-- **(Opcional)** Kubernetes para despliegue en producción
+### 📋 Prerequisites
+- **Python 3.11+** with updated pip
+- **Docker & Docker Compose** for containerization
+- **Git** for repository cloning
+- **(Optional)** Kubernetes for production deployment
 
-### ⚡ Instalación Rápida (5 minutos)
+### ⚡ Quick Installation (5 minutes)
 
 ```bash
-# 1️⃣ Clonar y navegar
+# 1️⃣ Clone and navigate
 git clone https://github.com/JazzzFM/FinveroPruebaTecnica.git
 cd FinveroPruebaTecnica
 
-# 2️⃣ Instalar dependencias Python
+# 2️⃣ Install Python dependencies
 pip install -r requirements.txt
 
-# 3️⃣ Configurar variables de ambiente
+# 3️⃣ Set environment variables
 export MLFLOW_TRACKING_URI=http://localhost:5000
 export JWT_SECRET_KEY=your_super_secret_key_here
 export ENVIRONMENT=development
 
-# 4️⃣ Descargar dataset (German Credit Data)
+# 4️⃣ Download dataset (German Credit Data)
 python scripts/fetch_german_credit.py
 
-# 5️⃣ Verificar instalación completa
+# 5️⃣ Verify complete installation
 python test_basic_functionality.py  # ✅ 22/22 tests
 ```
 
-### 🐳 **Método Docker (Recomendado)**
+### 🐳 **Docker Method (Recommended)**
 
 ```bash
-# Levantar stack completo MLOps
+# Start the complete MLOps stack
 docker-compose -f docker-compose.local.yml up -d
 
-# Verificar servicios funcionando
+# Verify running services
 docker-compose ps
 # ✅ mlflow     - http://localhost:5000
 # ✅ airflow    - http://localhost:8081 
@@ -241,104 +237,104 @@ docker-compose ps
 # ✅ dashboard  - http://localhost:8050
 ```
 
-### Despliegue con Docker
+### Deployment with Docker
 
 ```bash
-# Levantar stack completo
+# Start the complete stack
 docker-compose -f docker-compose.local.yml up -d
 
-# Verificar servicios
+# Verify services
 docker-compose ps
 ```
 
-**Servicios disponibles**:
+**Available Services**:
 - 🔬 MLflow UI: http://localhost:5000
 - 🔄 Airflow UI: http://localhost:8081
 - 🔒 Secured API: http://localhost:8080
 - 📊 Dashboard: http://localhost:8050
 
-## 💻 Guía de Uso Práctico
+## 💻 Practical Usage Guide
 
-### 🎯 **1. Entrenar Modelo GAM con Interpretabilidad**
+### 🎯 **1. Train Interpretable GAM Model**
 
 ```bash
-# Entrenar modelo completo con splines + factores
+# Train the complete model with splines + factors
 python src/main.py --config configs/base.yaml
 
-# ✅ Salida esperada:
+# ✅ Expected output:
 # - accuracy train: 0.860, test: 0.770
-# - splines para: age, duration, amount  
-# - factores para: status, purpose, etc.
-# - ranking automático generado
+# - splines for: age, duration, amount  
+# - factors for: status, purpose, etc.
+# - automatic ranking generated
 ```
 
-### 📊 **2. Generar Análisis de Interpretabilidad**
+### 📊 **2. Generate Interpretability Analysis**
 
 ```bash
-# Test completo GAM con gráficos explicativos
+# Complete GAM test with explanatory graphs
 python test_gam_interpretability.py
 
-# 📁 Archivos generados:
+# 📁 Generated files:
 # - reports/interpretability/sensitivity_analysis.png
-# - Análisis de sensibilidad por variable
-# - Efectos parciales visualizados
+# - Sensitivity analysis by variable
+# - Visualized partial effects
 ```
 
-### 📈 **3. Generar Reportes Automáticos**
+### 📈 **3. Generate Automatic Reports**
 
 ```bash
-# Reporte HTML interactivo (recomendado)
+# Interactive HTML report (recommended)
 echo "1" | python generate_report.py
 
-# 📄 Archivos disponibles:
-# - reports/report.html  ← Reporte web completo
-# - reports/report.md    ← Documentación técnica
-# - reports/plots/*.png  ← Gráficos generados
+# 📄 Available files:
+# - reports/report.html  ← Complete web report
+# - reports/report.md    ← Technical documentation
+# - reports/plots/*.png  ← Generated graphs
 ```
 
-### 🔒 **4. API Segura de Scoring**
+### 🔒 **4. Secure Scoring API**
 
-#### **Autenticación JWT**
+#### **JWT Authentication**
 ```bash
-# 1️⃣ Obtener token de acceso
+# 1️⃣ Get access token
 curl -X POST "http://localhost:8080/auth/token" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "username=admin&password=admin123"
 
-# 📄 Respuesta:
+# 📄 Response:
 # {"access_token": "eyJ0eXAiOiJKV1QiLCJhbGc...", "token_type": "bearer"}
 ```
 
-#### **Scoring Individual**
+#### **Individual Scoring**
 ```bash
-# 2️⃣ Predicción con interpretabilidad
+# 2️⃣ Prediction with interpretability
 curl -X POST "http://localhost:8080/score" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{
-    "Age": 35,
+  -d '{ 
+    "Age": 35, 
     "CreditAmount": 2500, 
-    "Duration": 12,
-    "Status": "existing_account",
-    "Purpose": "car_new"
+    "Duration": 12, 
+    "Status": "existing_account", 
+    "Purpose": "car_new" 
   }'
 
-# 📊 Respuesta con ranking:
-# {
-#   "credit_score": 0.234,
+# 📊 Response with ranking:
+# { 
+#   "credit_score": 0.234, 
 #   "risk_level": "low", 
-#   "ranking_percentile": 85,
+#   "ranking_percentile": 85, 
 #   "explanation": {...}
 # }
 ```
 
-#### **Scoring por Lotes**
+#### **Batch Scoring**
 ```bash
-# 3️⃣ Múltiples predicciones
+# 3️⃣ Multiple predictions
 curl -X POST "http://localhost:8080/batch_score" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{
+  -d '{ 
     "instances": [
       {"Age": 25, "CreditAmount": 1500, "Duration": 6},
       {"Age": 45, "CreditAmount": 5000, "Duration": 24}
@@ -346,221 +342,222 @@ curl -X POST "http://localhost:8080/batch_score" \
   }'
 ```
 
-### 📊 **5. Dashboard Interactivo**
+### 📊 **5. Interactive Dashboard**
 
 ```bash
-# Acceder al dashboard web
+# Access the web dashboard
 open http://localhost:8050
 
-# ✨ Funcionalidades disponibles:
-# - Scoring en tiempo real
-# - Visualización de efectos GAM
-# - Análisis de sensibilidad interactivo  
-# - Métricas de monitoreo
+# ✨ Available features:
+# - Real-time scoring
+# - Visualization of GAM effects
+# - Interactive sensitivity analysis
+# - Monitoring metrics
 ```
 
-### 🔍 **6. Monitoreo y Observabilidad**
+### 🔍 **6. Monitoring and Observability**
 
 ```bash
-# Ver métricas en MLflow
+# View metrics in MLflow
 open http://localhost:5000
 
-# Ver logs estructurados
+# View structured logs
 docker logs credit-gam-api --follow
 
-# Health check automático
+# Automatic health check
 curl http://localhost:8080/health
 # ✅ {"status": "healthy", "model_loaded": true}
 ```
 
-## 📊 Resultados de Verificación
+## 📊 Verification Results
 
-### ✅ **Tests de Integración**
+### ✅ **Integration Tests**
 
-**22/22 Tests Ejecutados Exitosamente:**
-- ✅ **Validación**: 13/13 tests pasaron (0.86s)
-- ✅ **Autenticación**: 9/9 tests pasaron (2.68s)
-- ✅ **Funcionalidad básica**: Todas las verificaciones completadas
-- ✅ **Interpretabilidad GAM**: Verificación exitosa
+**22/22 Tests Executed Successfully:**
+- ✅ **Validation**: 13/13 tests passed (0.86s)
+- ✅ **Authentication**: 9/9 tests passed (2.68s)
+- ✅ **Basic functionality**: All checks completed
+- ✅ **GAM Interpretability**: Successful verification
 
-### ✅ **Componentes MLOps**
+### ✅ **MLOps Components**
 
-**Sistema Completamente Funcional:**
-- ✅ **Autenticación JWT** con bcrypt hashing
-- ✅ **Validación de datos** con reglas de negocio  
-- ✅ **Monitoreo en tiempo real** con métricas
-- ✅ **Gestión segura de secretos** multi-backend
-- ✅ **Configuración multi-ambiente** (dev/prod)
-- ✅ **Evaluación de fairness** y bias detection
-- ✅ **Pipeline CI/CD** automatizado
-- ✅ **Reportes automáticos** HTML/MD/PDF
+**Fully Functional System:**
+- ✅ **JWT Authentication** with bcrypt hashing
+- ✅ **Data validation** with business rules
+- ✅ **Real-time monitoring** with metrics
+- ✅ **Secure multi-backend secret management**
+- ✅ **Multi-environment configuration** (dev/prod)
+- ✅ **Fairness and bias detection assessment**
+- ✅ **Automated CI/CD pipeline**
+- ✅ **Automatic HTML/MD/PDF reports**
 
-### ✅ **Modelo GAM Interpretable**
+### ✅ **Interpretable GAM Model**
 
-**Interpretabilidad Completa Implementada:**
-- ✅ **Splines para numéricas**: age, amount, duration
-- ✅ **Factores para categóricas**: status, purpose
-- ✅ **Efectos parciales**: Contribución individual por característica
-- ✅ **Análisis de sensibilidad**: Cambios cuantificados (-58.3% a +5.5%)
-- ✅ **Gráficos automáticos**: Visualizaciones de interpretabilidad
-- ✅ **Archivos generados**: sensitivity\_analysis.png
+**Full Interpretability Implemented:**
+- ✅ **Splines for numericals**: age, amount, duration
+- ✅ **Factors for categoricals**: status, purpose
+- ✅ **Partial effects**: Individual contribution by feature
+- ✅ **Sensitivity analysis**: Quantified changes (-58.3% to +5.5%)
+- ✅ **Automatic graphs**: Interpretability visualizations
+- ✅ **Generated files**: sensitivity_analysis.png
 
-## 🔧 Configuración Actual
+## 🔧 Current Configuration
 
-### Archivo `configs/base.yaml` - Completamente Configurado
+### `configs/base.yaml` File - Fully Configured
 ```yaml
 data_path: data/german_credit.csv
-target: credit_risk                    # ✅ Target corregido
+target: credit_risk                    # ✅ Corrected target
 test_size: 0.2
 seed: 42
 calibrate: true
 max_plots: 8
-# ✅ Features identificadas y configuradas
-numeric: [duration, amount, age]       # Splines GAM
-categorical: [status, credit_history, purpose, ...]  # Factores GAM
+# ✅ Identified and configured features
+numeric: [duration, amount, age]       # GAM Splines
+categorical: [status, credit_history, purpose, ...]  # GAM Factors
 promote_thresholds:
   ndcg_at_100: 0.85
   brier: 0.18
 ```
 
-## 🔬 Métricas del Modelo Implementadas y Verificadas
+## 🔬 Implemented and Verified Model Metrics
 
-**✅ Todas las métricas solicitadas funcionando:**
+**✅ All requested metrics working:**
 
-| Métrica | Descripción | Implementado | Verificado |
+| Metric | Description | Implemented | Verified |
 |---------|-------------|--------------|-----------|
-| **Accuracy** | Exactitud general del modelo | ✅ | ✅ |
-| **Precision** | Precisión de predicciones positivas | ✅ | ✅ |
-| **Recall** | Sensibilidad/Cobertura | ✅ | ✅ |
-| **F1-Score** | Media armónica precisión-recall | ✅ | ✅ |
-| **ROC-AUC** | Área bajo curva ROC | ✅ | ✅ |
+| **Accuracy** | Overall model accuracy | ✅ | ✅ |
+| **Precision** | Precision of positive predictions | ✅ | ✅ |
+| **Recall** | Sensitivity/Coverage | ✅ | ✅ |
+| **F1-Score** | Harmonic mean of precision-recall | ✅ | ✅ |
+| **ROC-AUC** | Area under the ROC curve | ✅ | ✅ |
 | **KS Statistic** | Kolmogorov-Smirnov test | ✅ | ✅ |
-| **Brier Score** | Calidad de probabilidades | ✅ | ✅ |
+| **Brier Score** | Quality of probabilities | ✅ | ✅ |
 | **NDCG@100** | Ranking metrics | ✅ | ✅ |
 
-## 📈 Estado Final del Sistema
+## 📈 Final System Status
 
-### 🎯 **COMPLETAMENTE LISTO PARA PRODUCCIÓN** 
+### 🎯 **COMPLETELY READY FOR PRODUCTION** 
 
-**Estado de Verificación Completa:**
-- ✅ **22/22 Tests pasando** sin errores
-- ✅ **8/8 Componentes MLOps** operativos 
-- ✅ **Todas las métricas** implementadas y verificadas
-- ✅ **Interpretabilidad GAM** completamente funcional
-- ✅ **Análisis de sensibilidad** automatizado
-- ✅ **Reportes automáticos** generados exitosamente
-- ✅ **Pipeline completamente probado** y funcional
+**Full Verification Status:**
+- ✅ **22/22 Tests passing** without errors
+- ✅ **8/8 MLOps Components** operational
+- ✅ **All metrics** implemented and verified
+- ✅ **GAM Interpretability** fully functional
+- ✅ **Automated sensitivity analysis**
+- ✅ **Automatic reports** successfully generated
+- ✅ **Fully tested and functional pipeline**
 
-### 📊 **Métricas de Rendimiento**
-- **Tiempo de respuesta**: ~70ms promedio
-- **Disponibilidad objetivo**: 99.9%
-- **Test coverage**: 100% componentes críticos
+### 📊 **Performance Metrics**
+- **Response time**: ~70ms average
+- **Target availability**: 99.9%
+- **Test coverage**: 100% critical components
 - **Security score**: Enterprise-grade
-- **Interpretabilidad**: Completa por característica
-- **Accuracy modelo GAM**: 86% train, 77% test
+- **Interpretability**: Complete by feature
+- **GAM model accuracy**: 86% train, 77% test
 
-## 🎯 **Interpretabilidad GAM - Verificación**
+## 🎯 **GAM Interpretability - Verification**
 
-### ✅ **Funciones Base GAM**
-1. **Splines (s)** para variables numéricas - Age, Amount, Duration
-2. **Factores (f)** para variables categóricas - Status, Purpose
-3. **TermList** construcción correcta de términos
-4. **Efectos parciales** con intervalos de confianza
+### ✅ **Base GAM Functions**
+1. **Splines (s)** for numerical variables - Age, Amount, Duration
+2. **Factors (f)** for categorical variables - Status, Purpose
+3. **TermList** correct term construction
+4. **Partial effects** with confidence intervals
 
-### ✅ **Análisis Individual por Característica**
-- **Age**: Impacto muy alto (-58.3% cambio en probabilidad)
-- **Duration**: Impacto significativo (+5.5% cambio)
-- **Amount**: Impacto moderado (variaciones menores)
-- **Visualizaciones automáticas** generadas
+### ✅ **Individual Analysis by Feature**
+- **Age**: Very high impact (-58.3% change in probability)
+- **Duration**: Significant impact (+5.5% change)
+- **Amount**: Moderate impact (minor variations)
+- **Automatic visualizations** generated
 
-### ✅ **Sensibilidad a Cambios Clave**
-- **Variaciones sistemáticas**: -50%, -25%, +25%, +50%
-- **Cuantificación precisa** del impacto
-- **Gráficos explicativos** automáticos
-- **Identificación de features críticas**
+### ✅ **Sensitivity to Key Changes**
+- **Systematic variations**: -50%, -25%, +25%, +50%
+- **Precise impact quantification**
+- **Explanatory automatic graphs**
+- **Identification of critical features**
 
 ## 🛠️ Troubleshooting
 
-### ❌ Problemas Comunes
+### ❌ Common Issues
 
-| Error | Solución |
+| Error | Solution |
 |-------|----------|
 | `ModuleNotFoundError: pygam` | `pip install pygam==0.9.0` |
-| `mlflow.exceptions.RestException` | Verificar `MLFLOW_TRACKING_URI` |
-| `docker-compose: command not found` | Instalar Docker Compose |
-| `JWT token expired` | Re-autenticarse con `/auth/token` |
-| `Permission denied: docker` | Añadir usuario a grupo docker |
+| `mlflow.exceptions.RestException` | Verify `MLFLOW_TRACKING_URI` |
+| `docker-compose: command not found` | Install Docker Compose |
+| `JWT token expired` | Re-authenticate with `/auth/token` |
+| `Permission denied: docker` | Add user to docker group |
 
-### 🔧 **Comandos de Diagnóstico**
+### 🔧 **Diagnostic Commands**
 
 ```bash
-# Verificar servicios Docker
+# Verify Docker services
 docker-compose ps
 
-# Logs detallados de API
+# Detailed API logs
 docker logs credit-gam-api --tail 50
 
-# Test de conectividad MLflow
+# MLflow connectivity test
 curl http://localhost:5000/health
 
-# Verificar modelo cargado
+# Verify loaded model
 curl http://localhost:8080/health
 ```
 
-### 📚 **Mejores Prácticas**
+### 📚 **Best Practices**
 
-#### **Desarrollo**
-- ✅ Usar entornos virtuales: `python -m venv venv`
-- ✅ Variables de ambiente en `.env`
-- ✅ Tests antes de commit: `python test_basic_functionality.py`
+#### **Development**
+- ✅ Use virtual environments: `python -m venv venv`
+- ✅ Environment variables in `.env`
+- ✅ Pre-commit tests: `python test_basic_functionality.py`
 
-#### **Producción**
-- ✅ Certificados SSL/TLS habilitados
-- ✅ Secretos en gestor seguro (no hardcoded)
-- ✅ Monitoreo proactivo activado
-- ✅ Backups automáticos configurados
+#### **Production**
+- ✅ Enable SSL/TLS certificates
+- ✅ Secrets in a secure manager (not hardcoded)
+- ✅ Proactive monitoring activated
+- ✅ Automatic backups configured
 
-## 🔮 Roadmap y Próximos Pasos
+## 🔮 Roadmap and Next Steps
 
-### 🚀 **Funcionalidades Avanzadas**
+### 🚀 **Advanced Features**
 
-#### **Escalabilidad**
-- [ ] **Auto-scaling horizontal** en Kubernetes
-- [ ] **Load balancing** con NGINX/Traefik  
-- [ ] **Cache distribuido** Redis para predicciones
-- [ ] **Message queues** para procesamiento asíncrono
+#### **Scalability**
+- [ ] **Horizontal auto-scaling** in Kubernetes
+- [ ] **Load balancing** with NGINX/Traefik
+- [ ] **Distributed cache** Redis for predictions
+- [ ] **Message queues** for asynchronous processing
 
-#### **ML Avanzado**
-- [ ] **A/B testing framework** para modelos
+#### **Advanced ML**
+- [ ] **A/B testing framework** for models
 - [ ] **Multi-model ensemble** GAM + XGBoost
-- [ ] **Automated retraining** con drift detection
-- [ ] **Hyperparameter optimization** automático
+- [ ] **Automated retraining** with drift detection
+- [ ] **Automatic hyperparameter optimization**
 
-#### **Interpretabilidad Avanzada**
-- [ ] **SHAP values integration** 
-- [ ] **LIME explanations** locales
+#### **Advanced Interpretability**
+- [ ] **SHAP values integration**
+- [ ] **Local LIME explanations**
 - [ ] **Counterfactual analysis**
-- [ ] **Feature importance** dinámico
+- [ ] **Dynamic feature importance**
 
-#### **DevOps y Monitoring**
-- [ ] **Grafana dashboards** personalizados
-- [ ] **Prometheus metrics** detalladas  
-- [ ] **Alertas inteligentes** basadas en ML
+#### **DevOps and Monitoring**
+- [ ] **Custom Grafana dashboards**
+- [ ] **Detailed Prometheus metrics**
+- [ ] **ML-based smart alerts**
 - [ ] **Circuit breaker** patterns
 
-## 📞 Contacto y Soporte
+## 📞 Contact and Support
 
-Para consultas técnicas, mejoras o issues:
+For technical inquiries, improvements, or issues:
 - 📧 **Email**: contacto@jazzdatasolutions.com
-- 🐛 **Issues**: Crear issue en el repositorio
-- 📚 **Documentación**: Ver `/reports/report.html`
-- 🔬 **Tests**: Ejecutar `python test_gam_interpretability.py`
+- 🐛 **Issues**: Create an issue in the repository
+- 📚 **Documentation**: See `/reports/report.html`
+- 🔬 **Tests**: Run `python test_gam_interpretability.py`
 
 ---
 
-## 🏷️ Tecnologías Utilizadas
 
-| Categoría | Tecnología | Versión | Estado |
+## 🏷️ Technologies Used
+
+| Category | Technology | Version | Status |
 |-----------|------------|---------|--------|
 | **ML Core** | PyGAM, Scikit-learn | Latest | ✅ |
 | **Interpretability** | GAM Splines, Partial Effects | Custom | ✅ |
@@ -573,20 +570,20 @@ Para consultas técnicas, mejoras o issues:
 ---
 
 
-## 🔬 **Archivos de Verificación Ejecutables**
+## 🔬 **Executable Verification Files**
 
 ```bash
-# Verificar todo el sistema
+# Verify the entire system
 python test_basic_functionality.py
 
-# Verificar interpretabilidad GAM específica  
+# Verify specific GAM interpretability
 python test_gam_interpretability.py
 
-# Verificar tests unitarios
+# Verify unit tests
 python -m pytest tests/unit/ -v
 
-# Generar reportes actualizados
+# Generate updated reports
 python generate_report.py
 ```
 
-*Implementado con las mejores prácticas de la industria, estándares enterprise y interpretabilidad completa del modelo GAM*
+*Implemented with industry best practices, enterprise standards, and full interpretability of the GAM model*

@@ -1,7 +1,14 @@
 \documentclass{beamer}
-\usetheme{Madrid}
 
-\title{Credit Scoring con MLOps y GAMs Interpretables}
+% Theme and color scheme
+\usetheme{Boadilla}
+\usecolortheme{default}
+
+% Package for icons and graphics
+\usepackage{fontawesome5}
+\usepackage{graphicx}
+
+\title{Credit Scoring with MLOps and Interpretable GAMs}
 \author{JazzDataSolutions}
 \institute{Finvero}
 \date{\today}
@@ -12,40 +19,63 @@
   \titlepage
 \end{frame}
 
-\begin{frame}{Objetivo del Proyecto}
+\begin{frame}{Project Overview}
   \begin{itemize}
-    \item Desarrollar un sistema de MLOps de extremo a extremo para el scoring de crédito.
-    \item Utilizar Modelos Aditivos Generalizados (GAMs) para garantizar la interpretabilidad.
-    \item Automatizar el ranking de clientes según su riesgo crediticio.
-    \item Implementar una solución robusta, segura y escalable, lista para producción.
+    \item \faRocket\  Develop an end-to-end MLOps system for credit scoring.
+    \item \faChartLine\  Use Generalized Additive Models (GAMs) to ensure interpretability.
+    \item \faUsers\  Automate customer ranking based on credit risk.
+    \item \faShieldAlt\  Implement a robust, secure, and scalable solution ready for production.
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Desarrollo del MLOps}
+\begin{frame}{MLOps Development}
   \begin{itemize}
-    \item **CI/CD:** Pipeline automatizado con GitHub Actions para tests y despliegues.
-    \item **Contenerización:** Docker y Docker Compose para un entorno consistente.
-    \item **Orquestación:** Airflow para la ejecución de pipelines de datos.
-    \item **Monitoreo:** MLflow para el seguimiento de experimentos y métricas.
-    \item **API Segura:** FastAPI con autenticación JWT para el servicio de scoring.
+    \item \faGithub\  **CI/CD:** Automated pipeline with GitHub Actions for tests and deployments.
+    \item \faDocker\  **Containerization:** Docker and Docker Compose for a consistent environment.
+    \item \faPaperPlane\  **Orchestration:** Airflow for data pipeline execution.
+    \item \faChartBar\  **Monitoring:** MLflow for tracking experiments and metrics.
+    \item \faKey\  **Secure API:** FastAPI with JWT authentication for the scoring service.
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Reportes y Scripts}
+\begin{frame}{Data Science Details}
   \begin{itemize}
-    \item **`generate_report.py`:** Script para generar reportes completos en HTML y Markdown.
-    \item **`src/plots.py`:** Módulo para crear visualizaciones detalladas del modelo.
-    \item **`src/report.py`:** Módulo para la generación de reportes programáticos.
-    \item **`scripts/`:** Directorio con scripts de utilidad para el proyecto.
+    \item **Dataset:** German Credit Dataset (1000 observations, 21 variables).
+    \item **Target Variable:** `credit_risk` (Good/Bad).
+    \item **Model:** Generalized Additive Model (GAM) with splines for numeric features and factors for categorical features.
+    \item **Key Metrics:** ROC-AUC, Precision-Recall AUC, Brier Score, NDCG@100, Kendall-Tau.
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Resultados}
+\begin{frame}{Results: Model Performance}
+  \begin{columns}
+    \column{0.5\textwidth}
+    \begin{itemize}
+      \item **Train Accuracy:** 86.0%
+      \item **Test Accuracy:** 77.0%
+      \item **ROC-AUC:** 0.850
+      \item **Brier Score:** 0.150
+    \end{itemize}
+    \column{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../reports/plots/confusion_matrix.png}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Results: Interpretability}
+  \begin{columns}
+    \column{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../reports/plots/roc_curve.png}
+    \column{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../reports/plots/precision_recall_curve.png}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Exercise Resolution}
   \begin{itemize}
-    \item **Precisión del Modelo:** 86% en entrenamiento y 77% en pruebas.
-    \item **Interpretabilidad:** Análisis de efectos parciales y sensibilidad por variable.
-    \item **Reportes Detallados:** Nuevos reportes con matriz de confusión, curva ROC y curva de precisión-recall.
-    \item **Sistema Completo:** Solución MLOps funcional y lista para producción.
+    \item A complete MLOps pipeline was built, from data ingestion to model deployment and monitoring.
+    \item The use of GAMs allows for a high degree of interpretability, which is crucial for credit scoring applications.
+    \item The system is designed to be modular and scalable, allowing for easy integration of new models and data sources.
+    \item The project demonstrates the ability to deliver a production-ready solution that meets the highest standards of quality and security.
   \end{itemize}
 \end{frame}
 

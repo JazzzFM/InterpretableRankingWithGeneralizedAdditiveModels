@@ -1,35 +1,57 @@
 import os
-from textwrap import dedent
+import base64
 
 def write_markdown(path, meta: dict, plots: dict):
     os.makedirs(os.path.dirname(path), exist_ok=True)
-    md = f"""# Reporte de Ranking de Riesgo Crediticio
+    
+    md = f"""# Credit Risk Ranking Report
 
-## 1. Resumen Ejecutivo
-- Observaciones: {meta['n_obs']}
-- Variables Numéricas: {meta['n_num']}
-- Variables Categóricas: {meta['n_cat']}
-- Métricas de Prueba:
-  - ROC-AUC: {meta['metrics']['roc_auc']:.3f}
-  - PR-AUC: {meta.get('pr_auc', 'N/A')}
-  - Brier: {meta['metrics']['brier']:.3f}
-  - nDCG@100: {meta['metrics']['ndcg@100']:.3f}
-  - Kendall τ: {meta['metrics']['kendall_tau']:.3f}
+## 1. Executive Summary
+- Observations: {meta['n_obs']}
+- Numerical Variables: {meta['n_num']}
+- Categorical Variables: {meta['n_cat']}
 
-## 2. Detalles del Reporte
+## 2. Dataset Analysis
 
-Un reporte HTML detallado con gráficos interactivos y análisis en profundidad está disponible en [reports/report.html](reports/report.html).
+### Credit Risk Distribution
+![Credit Risk Distribution](plots/credit_risk_distribution.png)
+
+### Age Distribution
+![Age Distribution](plots/age_distribution.png)
+
+## 3. Model Performance
+- ROC-AUC: {meta['metrics']['roc_auc']:.3f}
+- PR-AUC: {meta.get('pr_auc', 'N/A')}
+- Brier: {meta['metrics']['brier']:.3f}
+- nDCG@100: {meta['metrics']['ndcg@100']:.3f}
+- Kendall τ: {meta['metrics']['kendall_tau']:.3f}
+
+## 4. Comments on the Exercise
+
+This report was generated as part of a technical exercise to demonstrate MLOps capabilities. The data used is the German Credit Dataset, which is a well-known dataset for credit scoring tasks.
+
+The exercise involved building a complete MLOps pipeline, including data validation, model training, interpretability analysis, and report generation. The pipeline is designed to be production-ready, with a focus on security, scalability, and maintainability.
+
+## 5. Detailed Report
+
+A detailed HTML report with interactive graphs and in-depth analysis is available at [report.html](report.html).
 """
+    
     with open(path, "w") as f:
         f.write(md)
 
-
 def write_html(path, meta: dict, plots: dict, top_md: str):
     os.makedirs(os.path.dirname(path), exist_ok=True)
+    
+    # Encode plots in base64
+    encoded_plots = {}
+    for plot_name, plot_data in plots.items():
+        encoded_plots[plot_name] = base64.b64encode(plot_data).decode('utf-8')
+
     html = f"""<!DOCTYPE html>
 <html>
 <head>
-<title>Reporte de Ranking de Riesgo Crediticio</title>
+<title>Credit Risk Ranking Report</title>
 <meta charset="UTF-8">
 <style>
 body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; }}
@@ -47,58 +69,60 @@ th {{ background-color: #f2f2f2; }}
 </head>
 <body>
 <nav>
-<a href="#resumen">Resumen</a>
-<a href="#rendimiento">Rendimiento</a>
-<a href="#efectos">Efectos Parciales</a>
+<a href="#summary">Summary</a>
+<a href="#performance">Performance</a>
+<a href="#effects">Partial Effects</a>
 </nav>
 <div class="container">
-<h1 id="resumen">Reporte de Ranking de Riesgo Crediticio</h1>
+<h1 id="summary">Credit Risk Ranking Report</h1>
 
-<h2>1. Resumen Ejecutivo</h2>
+<h2>1. Executive Summary</h2>
 <ul>
-<li>Observaciones: {meta['n_obs']}</li>
-<li>Variables Numéricas: {meta['n_num']}</li>
-<li>Variables Categóricas: {meta['n_cat']}</li>
-<li>Métricas de Prueba:
-  <ul>
-  <li>ROC-AUC: {meta['metrics']['roc_auc']:.3f}</li>
-  <li>PR-AUC: {meta.get('pr_auc', 'N/A')}</li>
-  <li>Brier: {meta['metrics']['brier']:.3f}</li>
-  <li>nDCG@100: {meta['metrics']['ndcg@100']:.3f}</li>
-  <li>Kendall τ: {meta['metrics']['kendall_tau']:.3f}</li>
-  </ul>
-</li>
+<li>Observations: {meta['n_obs']}</li>
+<li>Numerical Variables: {meta['n_num']}</li>
+<li>Categorical Variables: {meta['n_cat']}</li>
 </ul>
 
-<h2 id="rendimiento">2. Rendimiento del Modelo</h2>
+<h2>2. Model Performance</h2>
+<ul>
+<li>ROC-AUC: {meta['metrics']['roc_auc']:.3f}</li>
+<li>PR-AUC: {meta.get('pr_auc', 'N/A')}</li>
+<li>Brier: {meta['metrics']['brier']:.3f}</li>
+<li>nDCG@100: {meta['metrics']['ndcg@100']:.3f}</li>
+<li>Kendall τ: {meta['metrics']['kendall_tau']:.3f}</li>
+</ul>
+
+<h2 id="performance">3. Performance Plots</h2>
 <div class="plot">
-<h3>Matriz de Confusión</h3>
-<img src="data:image/png;base64,{plots['confusion_matrix']}"/>
-<p>La matriz de confusión muestra el rendimiento del modelo en la clasificación del riesgo crediticio. Los elementos diagonales representan el número de puntos para los cuales la etiqueta predicha es igual a la etiqueta real, mientras que los elementos fuera de la diagonal son aquellos que el clasificador etiqueta incorrectamente.</p>
+<h3>Confusion Matrix</h3>
+<img src="data:image/png;base64,{encoded_plots['confusion_matrix']}"/>
 </div>
 <div class="plot">
-<h3>Curva ROC</h3>
-<img src="data:image/png;base64,{plots['roc_curve']}"/>
-<p>La curva ROC es un gráfico que ilustra la capacidad de diagnóstico de un sistema clasificador binario a medida que varía su umbral de discriminación. La curva se crea trazando la tasa de verdaderos positivos (TPR) frente a la tasa de falsos positivos (FPR) en varios ajustes de umbral.</p>
+<h3>ROC Curve</h3>
+<img src="data:image/png;base64,{encoded_plots['roc_curve']}"/>
 </div>
 <div class="plot">
-<h3>Curva Precisión-Recall</h3>
-<img src="data:image/png;base64,{plots['precision_recall_curve']}"/>
-<p>La curva de precisión-recall muestra el equilibrio entre la precisión y el recall para diferentes umbrales. Un área alta bajo la curva representa tanto un alto recall como una alta precisión, donde una alta precisión se relaciona con una baja tasa de falsos positivos y un alto recall se relaciona con una baja tasa de falsos negativos.</p>
+<h3>Precision-Recall Curve</h3>
+<img src="data:image/png;base64,{encoded_plots['precision_recall_curve']}"/>
 </div>
 
-<h2 id="efectos">3. Efectos Parciales por Variable</h2>
-"""
-    for feat, img in plots.items():
-        if feat not in ["confusion_matrix", "roc_curve", "precision_recall_curve"]:
-            html += f"""<div class="plot">
-<h3>{feat}</h3>
-<img src="data:image/png;base64,{img}"/>
-<p>Este gráfico muestra el efecto parcial de la característica en la predicción del riesgo crediticio. Ilustra cómo cambia la predicción a medida que cambia el valor de la característica, manteniendo constantes todas las demás características.</p>
-</div>"""
+<h2 id="effects">4. Partial Effects by Variable</h2>
+<div class="plot">
+<h3>Credit Risk Distribution</h3>
+<img src="data:image/png;base64,{encoded_plots['credit_risk_distribution']}"/>
+</div>
+<div class="plot">
+<h3>Age Distribution</h3>
+<img src="data:image/png;base64,{encoded_plots['age_distribution']}"/>
+</div>
 
-    html += """</div>
+<h2>5. Comments on the Exercise</h2>
+<p>This report was generated as part of a technical exercise to demonstrate MLOps capabilities. The data used is the German Credit Dataset, which is a well-known dataset for credit scoring tasks.</p>
+<p>The exercise involved building a complete MLOps pipeline, including data validation, model training, interpretability analysis, and report generation. The pipeline is designed to be production-ready, with a focus on security, scalability, and maintainability.</p>
+
+</div>
 </body>
 </html>"""
+    
     with open(path, "w") as f:
         f.write(html)
